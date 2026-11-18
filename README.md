@@ -6,6 +6,14 @@ You give Claude a PDF and say which chapters. It reads them, picks the vocabular
 
 ![The practice screen](examples/practice-setup.png)
 
+## Who it’s for
+
+I made this when I started reading a textbook on starfish with no background in biology. Almost every page had words I didn’t know and there was no way I could follow the chapter until I actually got some grasp of what things mean.
+
+It’s for anyone new to a field who needs to learn its vocabulary quickly, from the book in front of them.
+
+It also suits people who, like me, remember a word by typing it and hearing it. Type it shows you the meaning, you spell the word, and the page says it aloud when you submit.
+
 ## The study page
 
 The page is a single HTML file with two tabs, Words and Practice.
