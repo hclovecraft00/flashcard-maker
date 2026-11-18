@@ -114,7 +114,7 @@ p, dd { text-wrap: pretty; }
 .tform .field { text-align: center; font-family: var(--body); font-size: 1.3rem; color: #222222; min-height: 58px; padding: 0 62px; }
 .go { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--green); color: #FFFFFF; font-family: var(--body); font-weight: 800; font-size: 1.3rem; cursor: pointer; }
 .divider { width: 100%; border-top: 2px solid var(--pale); margin: 6px 0; }
-.ans { display: grid; gap: 10px; justify-items: center; width: 100%; }
+.ans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; justify-items: center; width: 100%; }
 .verdict { font-weight: 800; font-size: 15px; color: var(--red-deep); }
 .verdict.ok { color: var(--green); }
 .miss { color: var(--red-deep); text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
@@ -431,9 +431,11 @@ function nextBox(id, r) {
 /* the big word shrinks to fit the card's width; nothing else changes size */
 function fitTerm(el) {
   el.style.fontSize = ""; el.style.whiteSpace = "";
+  const box = el.parentElement, bs = getComputedStyle(box);
+  const room = () => Math.min(el.clientWidth, box.clientWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight));
   let size = parseFloat(getComputedStyle(el).fontSize);
-  while (el.scrollWidth > el.clientWidth && size > 24) { size -= 2; el.style.fontSize = size + "px"; }
-  if (el.scrollWidth > el.clientWidth) el.style.whiteSpace = "normal";
+  while (el.scrollWidth > room() && size > 24) { size -= 2; el.style.fontSize = size + "px"; }
+  if (el.scrollWidth > room()) el.style.whiteSpace = "normal";
 }
 function refit() { ["c-term", "a-term"].forEach(id => { const e = $(id); if (e.offsetParent) fitTerm(e); }); }
 window.addEventListener("resize", refit);
