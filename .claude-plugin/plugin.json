@@ -2,6 +2,9 @@
   "name": "flashcard-maker",
   "description": "Turn chapters of a textbook PDF into flashcards with spaced-repetition practice, spelling practice and pronunciation guides.",
   "version": "0.1.0",
-  "author": { "name": "hclovecraft00" },
-  "repository": "https://github.com/hclovecraft00/flashcard-maker"
+  "author": {
+    "name": "hclovecraft00"
+  },
+  "repository": "https://github.com/hclovecraft00/flashcard-maker",
+  "license": "MIT"
 }

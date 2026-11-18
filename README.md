@@ -81,3 +81,7 @@ The page never contains the book’s text, only the words, their meanings and gu
 - Scanned PDFs without selectable text can’t be read.
 - English-language books only.
 - No pictures from the book.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).
