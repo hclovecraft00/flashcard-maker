@@ -1,0 +1,593 @@
+<title>{{TITLE}}</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+/* Two-ink print on plain white: green type and outlines, orange-red dots and buttons, khaki details.
+   Everything the reader acts on sits in one outlined card. Single light theme by design. */
+:root {
+  --green: #13873D;
+  --red: #F5401F;
+  --red-deep: #D13217;
+  --khaki: #9C8862;
+  --khaki-ink: #74643F;
+  --pale: #E3F1E7;
+  --ink: #1F2A22;
+  --muted: #5E625F;
+  --line: #D9DED9;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --body: "Archivo", Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+body { background: #FFFFFF; color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1152px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 80px; overflow-x: clip; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1; margin: 0; color: var(--green); text-wrap: balance; }
+h1 { font-size: clamp(2.8rem, 7vw, 4.2rem); }
+h2 { font-size: 2.2rem; }
+p { margin: 0; }
+a { color: var(--green); }
+.small { font-size: 0.85rem; color: var(--muted); }
+:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+::selection { background: var(--pale); color: var(--ink); }
+p, dd { text-wrap: pretty; }
+
+/* header */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-block: 26px; }
+.brand { font-weight: 800; font-size: 15px; color: var(--green); text-decoration: none; }
+.nav { display: flex; gap: 26px; }
+.nav a { font-weight: 700; font-size: 15px; text-decoration: none; }
+.nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+
+/* shared pieces */
+.pill { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 22px; border-radius: 999px; border: 2px solid var(--green); background: #FFFFFF; color: var(--green); font-family: var(--body); font-weight: 800; font-size: 15px; text-decoration: none; cursor: pointer; }
+.pill:hover { border-color: var(--red-deep); color: var(--red-deep); }
+.pill.red { background: var(--red); border-color: var(--red); color: #FFFFFF; font-family: var(--display); font-weight: 400; font-size: 1.55rem; min-height: 56px; padding: 0 30px; }
+.pill.red:hover { background: var(--red-deep); border-color: var(--red-deep); color: #FFFFFF; }
+.pill.sm { min-height: 40px; font-size: 14px; padding: 0 18px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button { min-height: 36px; padding: 0 16px; border-radius: 999px; border: 2px solid var(--green); background: #FFFFFF; color: var(--green); font-family: var(--body); font-weight: 800; font-size: 14px; cursor: pointer; }
+.chips button[aria-pressed="true"] { background: var(--green); color: #FFFFFF; }
+.field { font: inherit; min-height: 52px; border: 2.5px solid var(--green); border-radius: 999px; padding: 0 22px; color: var(--green); background: #FFFFFF; width: 100%; box-sizing: border-box; caret-color: var(--red); }
+.field::placeholder { color: var(--khaki-ink); }
+.view { display: grid; gap: 32px; width: 100%; max-width: 860px; margin: 0 auto; }
+.view > * { min-width: 0; }
+
+/* words */
+.wtools { display: grid; gap: 12px; position: sticky; top: env(safe-area-inset-top, 0px); background: #FFFFFF; padding-block: 12px; z-index: 2; }
+.wbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.wlist { margin: 0; display: grid; }
+.witem { padding: 14px 0; border-bottom: 1.5px solid var(--line); display: grid; gap: 2px; }
+.witem dt { font-family: var(--display); font-size: 1.7rem; line-height: 1.1; color: var(--green); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.witem dt .ch, .witem dt .mine { font-family: var(--body); font-size: 0.72rem; font-weight: 800; color: var(--khaki-ink); }
+.witem dt .mine { color: var(--red-deep); }
+.witem dt .act { margin-left: auto; font-family: var(--body); font-size: 0.8rem; font-weight: 800; color: var(--muted); background: none; border: none; cursor: pointer; padding: 6px 0; text-decoration: underline; text-underline-offset: 3px; }
+.witem dt .act:hover { color: var(--red-deep); }
+.witem dd { margin: 0; max-width: 70ch; }
+.witem .roots { font-size: 0.82rem; font-weight: 700; color: var(--red-deep); }
+.witem .wpron { font-weight: 700; font-size: 0.9rem; color: var(--green); }
+.addform { display: grid; gap: 14px; border: 2.5px solid var(--green); border-radius: 26px; padding: 24px; }
+.addform label { display: grid; gap: 6px; font-weight: 700; font-size: 15px; color: var(--muted); }
+.addform .area { border-radius: 20px; padding: 12px 22px; min-height: 96px; resize: vertical; }
+.addform select.field { appearance: auto; }
+.notice { background: var(--pale); border-radius: 20px; padding: 12px 18px; color: #1D3B27; }
+
+/* practice */
+.prac { width: 100%; max-width: 760px; margin: 0 auto; display: grid; gap: 26px; }
+.prac > * { min-width: 0; }
+.help { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; background: var(--pale); border-radius: 20px; padding: 14px 20px; color: #1D3B27; }
+.help p { flex: 1 1 280px; min-width: 0; }
+.stepper { display: flex; align-items: center; gap: 10px; }
+.slabel { font-weight: 700; font-size: 15px; color: var(--muted); margin-right: 6px; }
+.sbtn { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--green); background: #FFFFFF; color: var(--green); padding: 0; cursor: pointer; }
+.sbtn:hover:not(:disabled) { border-color: var(--red); color: var(--red-deep); }
+.sbtn:disabled { border-color: var(--line); color: var(--line); cursor: default; }
+.sval { min-width: 2.2em; text-align: center; font-family: var(--display); font-size: 32px; line-height: 1; color: var(--green); }
+.starts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 560px) { .starts { grid-template-columns: 1fr; } }
+.start { display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 12px; min-height: 112px; padding: 18px 24px; border: 2.5px solid var(--green); border-radius: 26px; background: #FFFFFF; color: var(--ink); font: inherit; text-align: left; cursor: pointer; }
+.start:hover:not(:disabled) { border-color: var(--red); }
+.start:disabled { cursor: default; border-color: var(--line); }
+.snum { font-family: var(--display); font-weight: 400; font-size: 56px; line-height: 1; color: var(--red); text-align: center; }
+.stitle { display: block; font-family: var(--display); font-size: 32px; line-height: 1.1; color: var(--green); }
+.sline { display: block; font-weight: 700; font-size: 15px; color: var(--muted); }
+.start:disabled .snum, .start:disabled .stitle { color: var(--muted); }
+.sbar { display: block; height: 8px; margin-top: 10px; border-radius: 999px; background: var(--pale); overflow: hidden; }
+.sbar > span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--green); }
+.sprog { display: block; margin-top: 4px; font-weight: 700; font-size: 14px; color: var(--muted); }
+.ptop { display: flex; align-items: center; gap: 16px; }
+.pbar { flex: 1; height: 10px; border-radius: 999px; background: var(--pale); overflow: hidden; }
+.pbar > div { height: 100%; width: 0; border-radius: 999px; background: var(--green); transition: width 0.3s ease; }
+.pcount { font-weight: 700; font-size: 14px; color: var(--green); }
+.x { border: none; background: none; font-family: var(--display); font-size: 30px; line-height: 1; color: var(--green); cursor: pointer; padding: 0 4px; }
+.pcard { position: relative; border: 3px solid var(--green); border-radius: 34px; background: #FFFFFF; height: 660px; box-sizing: border-box; padding: 56px 48px 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+@media (max-width: 560px) { .pcard { height: 620px; padding: 44px 20px 36px; border-radius: 28px; } }
+.corner { position: absolute; right: -20px; top: -20px; width: 56px; height: 56px; border-radius: 50%; background: var(--red); }
+.tag { align-self: center; padding: 4px 14px; border-radius: 999px; background: var(--red-deep); color: #FFFFFF; font-weight: 800; font-size: 13px; }
+.clue { font-size: 1.3rem; line-height: 1.45; color: #222222; max-width: 32em; margin-top: 6px; }
+.term { display: block; width: 100%; font-family: var(--display); font-size: 5.2rem; line-height: 1.05; color: var(--green); white-space: nowrap; }
+@media (max-width: 560px) { .term { font-size: 3.6rem; } }
+.pattern { font-family: var(--display); font-size: 2rem; letter-spacing: 0.2em; color: var(--green); overflow-wrap: anywhere; display: grid; gap: 2px; }
+.pattern small { font-family: var(--body); font-weight: 700; font-size: 0.8rem; letter-spacing: 0; color: var(--khaki-ink); }
+.tform { position: relative; width: 100%; max-width: 460px; }
+.tform .field { text-align: center; font-family: var(--body); font-size: 1.3rem; color: #222222; min-height: 58px; padding: 0 62px; }
+.go { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--green); color: #FFFFFF; font-family: var(--body); font-weight: 800; font-size: 1.3rem; cursor: pointer; }
+.divider { width: 100%; border-top: 2px solid var(--pale); margin: 6px 0; }
+.ans { display: grid; gap: 10px; justify-items: center; width: 100%; }
+.verdict { font-weight: 800; font-size: 15px; color: var(--red-deep); }
+.verdict.ok { color: var(--green); }
+.miss { color: var(--red-deep); text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 8px; }
+.say { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--green); }
+.speak { width: 38px; height: 38px; border: 2px solid var(--green); border-radius: 50%; background: #FFFFFF; color: var(--green); display: grid; place-items: center; cursor: pointer; padding: 0; }
+.meaning { font-size: 1.15rem; color: #222222; max-width: 34em; }
+.typed { font-size: 14px; color: var(--muted); }
+.rate { padding-top: 18px; display: grid; gap: 10px; justify-items: center; }
+.rbtns { display: flex; align-items: center; gap: 18px; }
+.rbtns > span { font-weight: 800; font-size: 14px; color: var(--khaki-ink); }
+.rbtn { width: 74px; height: 74px; border-radius: 50%; border: none; background: var(--c); color: #FFFFFF; font-family: var(--display); font-size: 32px; cursor: pointer; outline-offset: 5px; }
+.rbtn[data-r="1"] { --c: var(--red); } .rbtn[data-r="2"] { --c: var(--khaki); } .rbtn[data-r="3"] { --c: var(--green); }
+.rbtn.rec { outline: 3px solid var(--c); }
+.rbtn:focus-visible { outline: 3px solid var(--ink); }
+@media (max-width: 420px) { .rbtns { gap: 12px; } .rbtn { width: 62px; height: 62px; font-size: 28px; } }
+.done { justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .pcard.pop { animation: pop 0.22s ease; }
+  @keyframes pop { from { transform: translateY(6px); opacity: 0.5; } to { transform: none; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="#practice" id="brand"></a>
+  <nav class="nav" aria-label="Sections"><a href="#words" data-v="words">words</a><a href="#practice" data-v="practice">practice</a></nav>
+</header>
+
+<main>
+<!-- ========== WORDS ========== -->
+<section class="view" id="v-words" hidden>
+  <h1>words</h1>
+  <div class="wtools">
+    <input id="q" class="field" type="search" placeholder="search…" autocomplete="off" aria-label="Search words">
+    <div class="chips" id="w-ch" role="group" aria-label="Chapter"></div>
+    <div class="wbar">
+      <span class="small" id="w-count" aria-live="polite"></span>
+      <div class="row">
+        <button class="pill sm" type="button" id="w-add">add a word</button>
+        <button class="pill sm" type="button" id="w-hidden" hidden></button>
+        <button class="pill sm" type="button" id="w-copy" hidden>copy my added words</button>
+      </div>
+    </div>
+  </div>
+  <p class="notice" id="w-msg" hidden></p>
+  <textarea class="field addform area" id="w-copytext" aria-label="Your added words, ready to copy" hidden readonly></textarea>
+  <form class="addform" id="w-form" hidden>
+    <h2>add a word</h2>
+    <label>word<input class="field" id="f-word" autocomplete="off" required></label>
+    <label>chapter<select class="field" id="f-ch"></select></label>
+    <label>meaning, in your own words<textarea class="field area" id="f-mean" required></textarea></label>
+    <label>pronunciation guide (optional)<input class="field" id="f-pron" autocomplete="off" placeholder="for example aw-TOT-uh-mee"></label>
+    <div class="row"><button class="pill red" type="submit">save word</button><button class="pill" type="button" id="f-cancel">cancel</button></div>
+  </form>
+  <dl class="wlist" id="wlist"></dl>
+</section>
+
+<!-- ========== PRACTICE ========== -->
+<section class="view" id="v-practice" hidden>
+  <div class="prac" id="p-home">
+    <h1>practice</h1>
+    <div class="help" id="p-help" hidden>
+      <p>Each word comes back just before you’d forget it: rate it <b>1</b> (hard) and you’ll see it again soon, <b>3</b> (easy) and it waits for weeks.</p>
+      <button class="pill sm" type="button" id="help-ok">got it</button>
+    </div>
+    <div class="chips" id="p-ch" role="group" aria-label="Chapter"></div>
+    <div class="stepper" role="group" aria-labelledby="n-label">
+      <span class="slabel" id="n-label">new words each time</span>
+      <button class="sbtn" type="button" id="n-less" aria-label="Fewer new words"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M4 10h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
+      <output class="sval" id="n-val" aria-live="polite">10</output>
+      <button class="sbtn" type="button" id="n-more" aria-label="More new words"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M4 10h12M10 4v12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="starts" id="p-starts">
+      <button class="start" type="button" data-m="flip"><b class="snum">0</b><span><span class="stitle">flip cards</span><span class="sline"></span><span class="sbar"><span></span></span><span class="sprog"></span></span></button>
+      <button class="start" type="button" data-m="type"><b class="snum">0</b><span><span class="stitle">type it</span><span class="sline"></span><span class="sbar"><span></span></span><span class="sprog"></span></span></button>
+    </div>
+  </div>
+
+  <div class="prac" id="p-sess" hidden>
+    <div class="ptop"><div class="pbar" aria-hidden="true"><div id="p-bar"></div></div><span class="pcount" id="p-count"></span><button class="x" id="p-quit" type="button" aria-label="End session">×</button></div>
+    <div class="pcard" id="p-card">
+      <div class="corner" aria-hidden="true"></div>
+      <span class="tag" id="c-tag"></span>
+      <span class="term" id="c-term"></span>
+      <p class="clue" id="c-clue"></p>
+      <p class="pattern" id="c-pattern"></p>
+      <form id="t-form" class="tform" autocomplete="off">
+        <input id="t-in" class="field" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="type &amp; press enter" aria-label="Your answer">
+        <button class="go" type="submit" aria-label="Check">↵</button>
+      </form>
+      <div class="row" id="t-aux"><button class="pill sm" type="button" id="t-hint">hint</button><button class="pill sm" type="button" id="t-reveal">reveal · esc</button></div>
+      <button class="pill red" type="button" id="f-show">show answer</button>
+      <div class="ans" id="c-ans" hidden>
+        <div class="divider"></div>
+        <span class="verdict" id="a-verdict"></span>
+        <span class="term" id="a-term"></span>
+        <span class="say" id="a-say"></span>
+        <p class="meaning" id="a-meaning"></p>
+        <span class="small" id="a-roots"></span>
+        <span class="typed" id="a-typed"></span>
+      </div>
+      <div class="rate" id="p-rate" hidden>
+        <div class="rbtns">
+          <span>hard</span>
+          <button class="rbtn" type="button" data-r="1" aria-label="1, hard">1</button>
+          <button class="rbtn" type="button" data-r="2" aria-label="2, okay">2</button>
+          <button class="rbtn" type="button" data-r="3" aria-label="3, easy">3</button>
+          <span>easy</span>
+        </div>
+        <span class="small">enter = the ringed one</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="prac" id="p-done" hidden>
+    <div class="pcard done">
+      <div class="corner" aria-hidden="true"></div>
+      <h2>done for today</h2>
+      <p id="d-text"></p>
+      <div class="row" style="justify-content: center"><button class="pill red" id="d-more" type="button">more new words</button><button class="pill" id="d-back" type="button">back</button></div>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<script>
+/* The build script replaces the next line with this book's data. Each word row is
+   [chapter, topic, term, roots, meaning, pronunciation guide, guide source, other spellings, read-the-word-aloud]. */
+const BOOK = /*BOOK*/{"id": "example", "title": "", "short": "", "chapters": [], "topics": {}, "words": []}/*END*/;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const strip = s => String(s).replace(/<[^>]+>/g, "");
+const slug = s => strip(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+/* spellNorm keeps every character, so the checker can line letters up with the answer; norm also drops punctuation, for matching words */
+function spellNorm(s) { return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[-–]/g, " ").replace(/\s+/g, " ").trim(); }
+function norm(s) { return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[-–]/g, " ").replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim(); }
+const G = Object.assign({}, BOOK.topics, {added: "added by you", other: "other"});
+const CHS = BOOK.chapters.map(c => c.n);
+const chTitle = n => (BOOK.chapters.find(c => c.n === n) || {}).title || "";
+
+/* ---------- this browser's storage, one set of keys per book ---------- */
+const KEY = name => `fm-${BOOK.id}-${name}`;
+function load(name, fallback) { try { const v = localStorage.getItem(KEY(name)); return v === null ? fallback : JSON.parse(v); } catch (e) { return fallback; } }
+function store(name, value) { try { localStorage.setItem(KEY(name), JSON.stringify(value)); } catch (e) {} }
+
+/* ---------- the word list: the book's words, plus words added on this device, minus hidden ones ---------- */
+const BUILT = BOOK.words.map(([c, g, t, r, m, p, ps, alt, say]) => ({id: c + "-" + slug(t), c, g, t, r, m, p, ps, alt: alt || [], say: !!say}));
+let added = load("added", []);      /* [{c, t, m, p}] */
+let hidden = new Set(load("hidden", []));  /* normalised terms */
+function allWords() {
+  const have = new Set(BUILT.map(w => norm(w.t)));
+  const mine = added.filter(a => !have.has(norm(a.t))).map(a => ({id: a.c + "-" + slug(a.t), c: a.c, g: "added", t: esc(a.t), r: "", m: esc(a.m), p: a.p ? esc(a.p) : "", ps: "yours", alt: [], say: !a.p, mine: true}));
+  return [...BUILT, ...mine];
+}
+const visible = () => allWords().filter(w => !hidden.has(norm(strip(w.t))));
+function mask(meaning, w) {
+  let out = meaning;
+  [strip(w.t), ...w.alt].forEach(form => (form.match(/[A-Za-z]{5,}/g) || []).forEach(part => {
+    out = out.replace(new RegExp("\\b" + part.slice(0, -1).replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\w*", "gi"), "____");
+  }));
+  return out;
+}
+const asType = w => ({kind: "type", id: "t-" + strip(w.t), x: {a: strip(w.t), p: w.p, c: strip(mask(w.m, w)), g: w.g, ch: w.c, acc: w.alt, say: w.say}});
+const asFlip = w => ({kind: "flip", id: w.id, x: w});
+
+/* ---------- views ---------- */
+const VIEWS = ["words", "practice"];
+function current() { const h = location.hash.slice(1); return VIEWS.includes(h) ? h : "practice"; }
+function show() {
+  const v = current();
+  VIEWS.forEach(x => { $("v-" + x).hidden = x !== v; });
+  document.querySelectorAll(".nav a").forEach(a => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+  window.scrollTo(0, 0);
+  if (v === "practice" && !sess) renderHome();
+  if (v === "words") renderWords();
+}
+window.addEventListener("hashchange", show);
+$("brand").textContent = (BOOK.short || BOOK.title || "my") + " flashcards";
+
+function makeChips(box, items, value, onPick) {
+  items.forEach(([val, label, title]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.dataset.val = val; b.textContent = label;
+    if (title) b.title = title;
+    b.setAttribute("aria-pressed", String(val === value));
+    b.addEventListener("click", () => onPick(val));
+    box.appendChild(b);
+  });
+}
+function syncChips(box, value) { box.querySelectorAll("button[data-val]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.val === value))); }
+const chItems = [["all", "all"], ...CHS.map(c => [String(c), "ch " + c, chTitle(c)])];
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+/* ---------- words tab ---------- */
+let wCh = "all", showHidden = false;
+const q = $("q");
+makeChips($("w-ch"), chItems, wCh, v => { wCh = v; syncChips($("w-ch"), v); renderWords(); });
+function say(msg) { $("w-msg").textContent = msg; $("w-msg").hidden = !msg; }
+function renderWords() {
+  const s = q.value.trim().toLowerCase();
+  const pool = showHidden ? allWords().filter(w => hidden.has(norm(strip(w.t)))) : visible();
+  const rows = pool.filter(x => (wCh === "all" || x.c === +wCh) && (!s || strip(x.t + " " + x.r + " " + x.m).toLowerCase().includes(s)));
+  $("wlist").innerHTML = rows.map(x => `<div class="witem"><dt>${x.t}<span class="ch">ch ${x.c}</span>${x.mine ? `<span class="mine">added by you</span>` : ""}`
+    + `<button class="act" type="button" data-act="${showHidden ? "unhide" : "hide"}" data-term="${esc(strip(x.t))}">${showHidden ? "show again" : "hide"}</button>`
+    + (x.mine && !showHidden ? `<button class="act" type="button" data-act="delete" data-term="${esc(strip(x.t))}">delete</button>` : "") + `</dt>`
+    + (x.p ? `<dd class="wpron">${x.p}${x.ps === "rules" ? ` <span class="small">· no dictionary entry</span>` : ""}</dd>` : "")
+    + `<dd>${x.m}</dd>${x.r ? `<dd class="roots">${x.r}</dd>` : ""}</div>`).join("")
+    || `<p class="small">${showHidden ? "No hidden words." : "Nothing matches."}</p>`;
+  $("w-count").textContent = (showHidden ? "hidden: " : "") + rows.length + (rows.length === 1 ? " word" : " words");
+  $("w-hidden").hidden = !hidden.size && !showHidden;
+  $("w-hidden").textContent = showHidden ? "back to all words" : `show hidden words (${hidden.size})`;
+  $("w-copy").hidden = !added.length;
+}
+q.addEventListener("input", renderWords);
+$("wlist").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if (!b) return;
+  const t = b.dataset.term, key = norm(t);
+  if (b.dataset.act === "hide") { hidden.add(key); say(`Hidden “${t}”. It won’t appear in practice on this device.`); }
+  if (b.dataset.act === "unhide") { hidden.delete(key); say(`“${t}” is back in the list and in practice.`); if (!hidden.size) showHidden = false; }
+  if (b.dataset.act === "delete") { added = added.filter(a => norm(a.t) !== key); store("added", added); say(`Deleted “${t}”.`); }
+  store("hidden", [...hidden]);
+  renderWords();
+});
+$("w-hidden").addEventListener("click", () => { showHidden = !showHidden; say(""); renderWords(); });
+CHS.forEach(n => { const o = document.createElement("option"); o.value = n; o.textContent = `ch ${n} · ${chTitle(n)}`.slice(0, 60); $("f-ch").appendChild(o); });
+$("w-add").addEventListener("click", () => { $("w-form").hidden = false; say(""); if (wCh !== "all") $("f-ch").value = wCh; $("f-word").focus(); });
+$("f-cancel").addEventListener("click", () => { $("w-form").hidden = true; $("w-form").reset(); });
+$("w-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const t = $("f-word").value.trim(), m = $("f-mean").value.trim(), p = $("f-pron").value.trim(), c = +$("f-ch").value;
+  if (!t || !m) return;
+  if (allWords().some(w => norm(strip(w.t)) === norm(t))) { say(`“${t}” is already in the list. Search for it above, or use “show hidden words” if you hid it.`); return; }
+  added.push({c, t, m, p}); store("added", added);
+  $("w-form").reset(); $("w-form").hidden = true;
+  say(`Added “${t}” to chapter ${c}. It’s in practice now, on this device. “Copy my added words” lets you send it to Claude to make it permanent.`);
+  renderWords();
+});
+$("w-copy").addEventListener("click", async () => {
+  const text = "Please add these words to my flashcards:\n" + added.map(a => `- chapter ${a.c} | ${a.t} | ${a.m}${a.p ? " | " + a.p : ""}`).join("\n");
+  try { await navigator.clipboard.writeText(text); say("Copied. Paste it into a Claude Code chat, or into this page on another device."); $("w-copytext").hidden = true; }
+  catch (err) { const box = $("w-copytext"); box.value = text; box.hidden = false; box.focus(); box.select(); say("Your browser blocked copying, so the text is selected below. Copy it with your usual shortcut."); }
+});
+
+/* ---------- spaced repetition ---------- */
+const STEPS = [5, 10, 20, 30, Infinity];
+let NEW_PER_SESSION = (v => v === "all" ? Infinity : STEPS.includes(v) ? v : 10)(load("newper", 10));
+const IV = [0, 1, 3, 7, 16, 35, 90]; /* days until the next review, by box */
+const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
+let S = Object.assign({flip: {}, type: {}}, load("srs", {}));
+const save = () => store("srs", S);
+
+let pMode = "flip", pCh = "all", sess = null;
+function deck(m = pMode) {
+  const ws = visible().filter(w => pCh === "all" || w.c === +pCh);
+  return m === "type" ? ws.map(asType) : ws.map(asFlip);
+}
+function counts(m) {
+  const d = deck(m), t = today(), st = S[m];
+  return {due: d.filter(c => st[c.id] && st[c.id].due <= t).length, fresh: d.filter(c => !st[c.id]).length, total: d.length};
+}
+makeChips($("p-ch"), chItems, pCh, v => { pCh = v; syncChips($("p-ch"), v); renderHome(); });
+function stepNew(dir) {
+  NEW_PER_SESSION = STEPS[Math.max(0, Math.min(STEPS.length - 1, STEPS.indexOf(NEW_PER_SESSION) + dir))];
+  store("newper", NEW_PER_SESSION === Infinity ? "all" : NEW_PER_SESSION);
+  renderHome();
+}
+$("n-less").addEventListener("click", () => stepNew(-1));
+$("n-more").addEventListener("click", () => stepNew(1));
+document.querySelectorAll("#p-starts .start").forEach(b => b.addEventListener("click", () => { pMode = b.dataset.m; startSession(false); }));
+$("p-help").hidden = load("help-seen", false);
+$("help-ok").addEventListener("click", () => { $("p-help").hidden = true; store("help-seen", true); });
+
+function renderHome() {
+  $("p-home").hidden = false; $("p-sess").hidden = true; $("p-done").hidden = true;
+  syncChips($("p-ch"), pCh);
+  const si = STEPS.indexOf(NEW_PER_SESSION);
+  $("n-val").textContent = NEW_PER_SESSION === Infinity ? "all" : NEW_PER_SESSION;
+  $("n-less").disabled = si === 0; $("n-more").disabled = si === STEPS.length - 1;
+  document.querySelectorAll("#p-starts .start").forEach(b => {
+    const k = counts(b.dataset.m), nw = Math.min(k.fresh, NEW_PER_SESSION), n = k.due + nw, started = k.total - k.fresh;
+    b.disabled = !n;
+    b.querySelector(".snum").textContent = n;
+    const line = n ? [nw ? nw + " new" : "", k.due ? k.due + " to review" : ""].filter(Boolean).join(" · ") : "all caught up";
+    const prog = `${started} of ${k.total} started`;
+    b.querySelector(".sline").textContent = line;
+    b.querySelector(".sprog").textContent = prog;
+    b.querySelector(".sbar > span").style.width = (k.total ? started / k.total * 100 : 0) + "%";
+    b.setAttribute("aria-label", `${b.querySelector(".stitle").textContent}: ${n ? "start " + n + " cards, " : ""}${line}. ${prog}`);
+  });
+}
+function startSession(onlyNew) {
+  const t = today(), st = S[pMode], d = deck();
+  const due = onlyNew ? [] : shuffle(d.filter(c => st[c.id] && st[c.id].due <= t));
+  const fresh = shuffle(d.filter(c => !st[c.id]).slice(0, NEW_PER_SESSION));
+  const list = [...due, ...fresh];
+  if (!list.length) return;
+  sess = {q: list, total: list.length, done: 0, hard: new Set(), revealed: false, hint: 0, rec: 2};
+  $("p-home").hidden = true; $("p-done").hidden = true; $("p-sess").hidden = false;
+  renderCard();
+}
+$("p-quit").addEventListener("click", () => { sess = null; renderHome(); });
+$("d-more").addEventListener("click", () => startSession(true));
+$("d-back").addEventListener("click", () => { sess = null; renderHome(); });
+
+function nextBox(id, r) {
+  if (r === 1) return 1;
+  const s = S[pMode][id];
+  let nb = (s ? s.b : 0) + (r === 2 ? 1 : 2);
+  if (sess && sess.hard.has(id)) nb = 1;
+  return Math.min(6, nb);
+}
+/* the big word shrinks to fit the card's width; nothing else changes size */
+function fitTerm(el) {
+  el.style.fontSize = ""; el.style.whiteSpace = "";
+  let size = parseFloat(getComputedStyle(el).fontSize);
+  while (el.scrollWidth > el.clientWidth && size > 24) { size -= 2; el.style.fontSize = size + "px"; }
+  if (el.scrollWidth > el.clientWidth) el.style.whiteSpace = "normal";
+}
+function refit() { ["c-term", "a-term"].forEach(id => { const e = $(id); if (e.offsetParent) fitTerm(e); }); }
+window.addEventListener("resize", refit);
+if (document.fonts) document.fonts.ready.then(refit);
+const ivLabel = d => d <= 1 ? "tomorrow" : d < 30 ? "in " + d + " days" : "in about " + Math.round(d / 30) + " months";
+
+function drawPattern() {
+  const x = sess.q[0].x;
+  const pat = x.a.split("").map((ch, i) => ch === " " ? " " : (i < sess.hint ? esc(ch) : "_")).join(" ");
+  const w = x.a.split(" ").map(s => s.length);
+  $("c-pattern").innerHTML = `<span>${pat}</span><small>${w.length > 1 ? w.join(" + ") + " letters" : w[0] + " letters"}</small>`;
+}
+function renderCard() {
+  if (!sess.q.length) return finish();
+  const c = sess.q[0], isT = c.kind === "type";
+  sess.revealed = false; sess.hint = 0;
+  $("p-bar").style.width = (sess.done / sess.total) * 100 + "%";
+  $("p-count").textContent = `${sess.done} / ${sess.total}`;
+  $("c-tag").textContent = `ch ${isT ? c.x.ch : c.x.c} · ${(G[c.x.g] || "").toLowerCase()}`;
+  $("c-term").hidden = isT; $("c-clue").hidden = !isT; $("c-pattern").hidden = !isT;
+  if (isT) { $("c-clue").textContent = c.x.c; drawPattern(); } else { $("c-term").innerHTML = c.x.t; fitTerm($("c-term")); }
+  $("t-form").hidden = !isT; $("t-aux").hidden = !isT; $("f-show").hidden = isT;
+  $("c-ans").hidden = true; $("p-rate").hidden = true;
+  const card = $("p-card"); card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop");
+  if (isT) { $("t-in").value = ""; $("t-in").focus({preventScroll: true}); } else $("f-show").focus({preventScroll: true});
+}
+const SPEAKER = `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5c1.5 1.8 1.5 5.2 0 7M18.5 6c3 3.3 3 8.7 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`;
+function showSay(x) {
+  $("a-say").hidden = false;
+  $("a-say").innerHTML = `${x.p ? `<span>${x.p}</span>` : ""}<button class="speak" type="button" id="a-speak" aria-label="Hear it">${SPEAKER}</button>`;
+  $("a-speak").addEventListener("click", () => speak(x));
+}
+function reveal(val) {
+  if (!sess || sess.revealed) return;
+  const c = sess.q[0];
+  sess.revealed = true;
+  $("t-form").hidden = true; $("t-aux").hidden = true; $("f-show").hidden = true; $("c-ans").hidden = false;
+  const v = $("a-verdict");
+  if (c.kind === "type") {
+    const x = c.x;
+    let best = Infinity;
+    if (val !== null) [x.a, ...x.acc].forEach(t => { best = Math.min(best, lev(val, spellNorm(t)).d); });
+    const main = val === null ? {match: new Array(x.a.length).fill(false)} : lev(val, spellNorm(x.a));
+    const ok = val !== null && best === 0;
+    const close = !ok && val !== null && best <= (x.a.length <= 6 ? 1 : 2);
+    sess.rec = ok ? (sess.hint ? 2 : 3) : close ? 2 : 1;
+    v.hidden = false;
+    v.className = "verdict" + (ok ? " ok" : "");
+    v.textContent = ok ? "yes!" : close ? "so close" : val === null ? "here it is" : "not quite";
+    $("c-pattern").hidden = true;
+    $("a-term").hidden = false;
+    $("a-term").innerHTML = x.a.split("").map((ch, i) => (!ok && ch !== " " && !main.match[i]) ? `<span class="miss">${esc(ch)}</span>` : esc(ch)).join("");
+    fitTerm($("a-term"));
+    showSay(x);
+    $("a-meaning").hidden = true; $("a-roots").textContent = "";
+    $("a-typed").textContent = (val !== null && !ok) ? "you typed: " + $("t-in").value.trim() : "";
+    speak(x);
+  } else {
+    sess.rec = 2;
+    v.hidden = true; $("a-term").hidden = true;
+    showSay({a: strip(c.x.t), p: c.x.p, say: c.x.say});
+    $("a-meaning").hidden = false; $("a-meaning").innerHTML = c.x.m;
+    $("a-roots").innerHTML = c.x.r; $("a-typed").textContent = "";
+  }
+  document.querySelectorAll(".rbtn").forEach(b => {
+    const r = +b.dataset.r;
+    b.classList.toggle("rec", r === sess.rec);
+    b.title = r === 1 ? "see it again soon" : "next review " + ivLabel(IV[nextBox(c.id, r)]);
+  });
+  $("p-rate").hidden = false;
+  document.querySelector(`.rbtn[data-r="${sess.rec}"]`).focus({preventScroll: true});
+}
+function rate(r) {
+  if (!sess || !sess.revealed) return;
+  const c = sess.q.shift(), st = S[pMode], t = today();
+  const s = st[c.id] || {b: 0, due: t};
+  if (r === 1) { s.b = 1; s.due = t + 1; sess.hard.add(c.id); sess.q.splice(Math.min(3, sess.q.length), 0, c); }
+  else { s.b = nextBox(c.id, r); s.due = t + IV[s.b]; sess.done++; }
+  st[c.id] = s; save();
+  renderCard();
+}
+function finish() {
+  const t = today(), st = S[pMode], d = deck();
+  const tomorrow = d.filter(c => st[c.id] && st[c.id].due === t + 1).length;
+  const fresh = d.filter(c => !st[c.id]).length;
+  sess = null;
+  $("p-sess").hidden = true; $("p-done").hidden = false;
+  $("d-text").textContent = tomorrow ? `${tomorrow} word${tomorrow === 1 ? "" : "s"} to review tomorrow.` : "Nothing due tomorrow.";
+  $("d-more").hidden = !fresh;
+  $("d-more").textContent = `${Math.min(NEW_PER_SESSION, fresh)} more new words`;
+}
+$("t-form").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!sess || sess.revealed) return;
+  const val = spellNorm($("t-in").value);
+  reveal(val ? val : null);
+});
+$("t-reveal").addEventListener("click", () => reveal(null));
+$("t-hint").addEventListener("click", () => {
+  if (!sess || sess.revealed) return;
+  const a = sess.q[0].x.a;
+  sess.hint = Math.min(sess.hint + 1, a.length);
+  if (a[sess.hint - 1] === " ") sess.hint = Math.min(sess.hint + 1, a.length);
+  drawPattern(); $("t-in").focus({preventScroll: true});
+});
+$("f-show").addEventListener("click", () => reveal());
+document.querySelectorAll(".rbtn").forEach(b => b.addEventListener("click", () => rate(+b.dataset.r)));
+document.addEventListener("keydown", e => {
+  if (current() !== "practice" || !sess) return;
+  const c = sess.q[0];
+  if (!sess.revealed) {
+    if (e.key === "Escape" && c && c.kind === "type") { e.preventDefault(); reveal(null); }
+    else if (c && c.kind === "flip" && e.key === " " && e.target.tagName !== "BUTTON") { e.preventDefault(); reveal(); }
+    return;
+  }
+  if (["1", "2", "3"].includes(e.key)) { e.preventDefault(); rate(+e.key); }
+  else if (e.key === "Enter" && e.target.tagName !== "BUTTON") { e.preventDefault(); rate(sess.rec); }
+});
+
+/* ---------- speech: the browser's own voice ---------- */
+const canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let voice = null;
+const accent = BOOK.spelling === "american" ? /en[-_]US/i : /en[-_]GB/i;
+function pickVoice() { try { const vs = speechSynthesis.getVoices(); voice = vs.find(v => accent.test(v.lang)) || vs.find(v => /^en/i.test(v.lang)) || null; } catch (e) {} }
+if (canSpeak) { pickVoice(); try { speechSynthesis.onvoiceschanged = pickVoice; } catch (e) {} }
+function speak(x) {
+  if (!canSpeak) return;
+  try {
+    speechSynthesis.cancel();
+    /* everyday-looking words are read as written; others are read from the guide, which the voice says more accurately */
+    const u = new SpeechSynthesisUtterance(x.say || !x.p ? x.a : strip(x.p).toLowerCase());
+    if (voice) { u.voice = voice; u.lang = voice.lang; } else u.lang = BOOK.spelling === "american" ? "en-US" : "en-GB";
+    u.rate = 0.8;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+/* ---------- spelling checker: edit distance, and which letters of the answer were matched ---------- */
+function lev(a, b) {
+  const n = a.length, m = b.length, D = [];
+  for (let i = 0; i <= n; i++) { D[i] = new Array(m + 1).fill(0); D[i][0] = i; }
+  for (let j = 0; j <= m; j++) D[0][j] = j;
+  for (let i = 1; i <= n; i++) for (let j = 1; j <= m; j++)
+    D[i][j] = Math.min(D[i - 1][j] + 1, D[i][j - 1] + 1, D[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  const match = new Array(m).fill(false);
+  let i = n, j = m;
+  while (i > 0 && j > 0) {
+    if (a[i - 1] === b[j - 1] && D[i][j] === D[i - 1][j - 1]) { match[j - 1] = true; i--; j--; }
+    else if (D[i][j] === D[i - 1][j - 1] + 1) { i--; j--; }
+    else if (D[i][j] === D[i][j - 1] + 1) { j--; }
+    else { i--; }
+  }
+  return {d: D[n][m], match};
+}
+
+show();
+</script>

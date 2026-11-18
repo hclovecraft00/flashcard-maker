@@ -1,0 +1,11 @@
+{
+  "name": "flashcard-maker",
+  "owner": { "name": "hclovecraft00" },
+  "plugins": [
+    {
+      "name": "flashcard-maker",
+      "source": "./",
+      "description": "Turn chapters of a textbook PDF into flashcards with spaced-repetition practice, spelling practice and pronunciation guides."
+    }
+  ]
+}
